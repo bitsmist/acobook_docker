@@ -1,0 +1,4 @@
+fastcgi_cache_path			/var/cache/nginx/phpfpm levels=1:2 keys_zone=phpfpm:18m inactive=600m max_size=100M;
+fastcgi_cache_valid			200 60m;
+
+#add_header					X-F-Cache $upstream_cache_status;
