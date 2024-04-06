@@ -5,15 +5,15 @@ services:
         container_name: acobook_phpfpm
         network_mode: host
         volumes:
-            - ./acobook_phpfpm/conf/tzdata/Japan:/etc/localtime
-            - ./acobook_phpfpm/conf/php/php.ini:/usr/local/etc/php/php.ini
-            - ./acobook_phpfpm/conf/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-            - ./acobook_phpfpm/conf/php-fpm/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-            - ./acobook_phpfpm/log:/usr/local/var/log
-            - ./acobook_phpfpm/contents/bitsmist-server_v1:/usr/share/contents/bitsmist-server_v1
-            - ./acobook_phpfpm/contents/acobook_api:/usr/share/contents/acobook_api
-            - ./acobook_phpfpm/contents/acobook_server:/usr/share/contents/acobook_server
-            - ./acobook_phpfpm/contents/default:/usr/share/nginx/html
+            - ./phpfpm/conf/tzdata/Japan:/etc/localtime
+            - ./phpfpm/conf/php/php.ini:/usr/local/etc/php/php.ini
+            - ./phpfpm/conf/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            - ./phpfpm/conf/php-fpm/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./phpfpm/log:/usr/local/var/log
+            - ./phpfpm/contents/bitsmist-server_v1:/usr/share/contents/bitsmist-server_v1
+            - ./phpfpm/contents/acobook_api:/usr/share/contents/acobook_api
+            - ./phpfpm/contents/acobook_server:/usr/share/contents/acobook_server
+            - ./phpfpm/contents/default:/usr/share/nginx/html
     acobook_nginx:
         image: acobook/nginx
         container_name: acobook_nginx
@@ -21,10 +21,10 @@ services:
         depends_on:
             - acobook_phpfpm
         volumes:
-            - ./acobook_nginx/conf/tzdata/Japan:/etc/localtime
-            - ./acobook_nginx/conf/nginx/conf.d:/etc/nginx/conf.d
-            - ./acobook_nginx/log:/var/log/nginx
-            - ./acobook_nginx/contents/bitsmist-js_v1:/usr/share/contents/bitsmist-js_v1
-            - ./acobook_nginx/contents/bitsmist-js-extras_v1:/usr/share/contents/bitsmist-js-extras_v1
-            - ./acobook_nginx/contents/acobook_app:/usr/share/contents/acobook_app
-            - ./acobook_nginx/contents/default:/usr/share/nginx/html
+            - ./nginx/conf/tzdata/Japan:/etc/localtime
+            - ./nginx/conf/nginx/conf.d:/etc/nginx/conf.d
+            - ./nginx/log:/var/log/nginx
+            - ./nginx/contents/bitsmist-js_v1:/usr/share/contents/bitsmist-js_v1
+            - ./nginx/contents/bitsmist-js-extras_v1:/usr/share/contents/bitsmist-js-extras_v1
+            - ./nginx/contents/acobook_app:/usr/share/contents/acobook_app
+            - ./nginx/contents/default:/usr/share/nginx/html

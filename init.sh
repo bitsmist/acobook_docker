@@ -1,9 +1,9 @@
-cd acobook_dockers/acobook_nginx/contents
+cd nginx/contents
 ln -s ../../../bitsmist-js_v1 .
 ln -s ../../../bitsmist-js-extras_v1 .
 ln -s ../../../acobook_app .
 
-cd acobook_dockers/acobook_phpfpm/contents
+cd phpfpm/contents
 ln -s ../../../bitsmist-server_v1 .
 ln -s ../../../acobook_server .
 ln -s ../../../acobook_api .
