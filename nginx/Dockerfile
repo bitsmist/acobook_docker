@@ -1,4 +1,4 @@
-FROM nginx:1.25-alpine
+FROM nginx:1.31-alpine
 
 RUN apk --update --no-cache add shadow
 RUN usermod  --uid 1000 nginx

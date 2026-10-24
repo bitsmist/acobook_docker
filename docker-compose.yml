@@ -3,28 +3,38 @@ services:
     acobook_phpfpm:
         image: acobook/phpfpm
         container_name: acobook_phpfpm
-        network_mode: host
         volumes:
             - ./phpfpm/conf/tzdata/Japan:/etc/localtime
             - ./phpfpm/conf/php/php.ini:/usr/local/etc/php/php.ini
-            - ./phpfpm/conf/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            # - ./phpfpm/conf/php/conf.d/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
             - ./phpfpm/conf/php-fpm/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./phpfpm/log:/usr/local/var/log
             - ./phpfpm/contents/bitsmist-server_v1:/usr/share/contents/bitsmist-server_v1
             - ./phpfpm/contents/acobook_api:/usr/share/contents/acobook_api
             - ./phpfpm/contents/acobook_server:/usr/share/contents/acobook_server
-            - ./phpfpm/contents/default:/usr/share/nginx/html
+        networks:
+          - acobook-net
     acobook_nginx:
         image: acobook/nginx
         container_name: acobook_nginx
-        network_mode: host
         depends_on:
             - acobook_phpfpm
         volumes:
             - ./nginx/conf/tzdata/Japan:/etc/localtime
             - ./nginx/conf/nginx/conf.d:/etc/nginx/conf.d
             - ./nginx/log:/var/log/nginx
-            - ./nginx/contents/bitsmist-js_v1:/usr/share/contents/bitsmist-js_v1
-            - ./nginx/contents/bitsmist-js-extras_v1:/usr/share/contents/bitsmist-js-extras_v1
             - ./nginx/contents/acobook_app:/usr/share/contents/acobook_app
-            - ./nginx/contents/default:/usr/share/nginx/html
+        labels:
+            - traefik.enable=true
+            - traefik.docker.network=proxy-net
+            - traefik.http.routers.acobook_nginx.rule=Host(`app.bitsmist.com`) || Host(`api.bitsmist.com`)
+            - traefik.http.routers.my-scribble-net_nginx.entrypoints=websecure
+            - traefik.http.routers.my-scribble-net_nginx.tls=true
+        networks:
+          - proxy-net
+          - acobook-net
+
+networks:
+  proxy-net:
+    external: true
+  acobook-net:
